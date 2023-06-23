@@ -15,6 +15,13 @@ namespace ManejoPresupuesto.Controllers
 			this.repositorioTiposCuentas = repositorioTiposCuentas;
 		}
 
+		public async Task<IActionResult> Index()
+		{
+			var usuarioId = 2;
+			var tiposCuentas = await repositorioTiposCuentas.Obtener(usuarioId);
+				return View(tiposCuentas);
+		}
+
 		public IActionResult Crear()
 		{
 			return View();
@@ -30,7 +37,7 @@ namespace ManejoPresupuesto.Controllers
 				return View(tipoCuenta);
 			}
 
-			tipoCuenta.UsuarioId = 1;
+			tipoCuenta.UsuarioId = 2;
 
 			//Agregamos la validación
 			var yaExisteTipoCuenta = await repositorioTiposCuentas.Existe(tipoCuenta.Nombre, tipoCuenta.UsuarioId);
@@ -40,7 +47,7 @@ namespace ManejoPresupuesto.Controllers
 				return View(tipoCuenta);
 			}
 			await repositorioTiposCuentas.Crear(tipoCuenta);
-			return View();
+			return RedirectToAction("Index");
 		}
 
 		[HttpGet]
