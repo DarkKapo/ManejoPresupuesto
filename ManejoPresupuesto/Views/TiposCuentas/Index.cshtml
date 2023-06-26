@@ -17,16 +17,26 @@
             <th>Nombre</th>
         </tr>
     </thead>
-    @foreach (var tipoCuenta in Model)
-    {
-        <tr>
-            <td>
-                <a class="btn btn-primary" asp-action="Editar" asp-route-id="@tipoCuenta.Id">Editar</a>
-                <a class="btn btn-danger" asp-action="Borrar" asp-route-id="@tipoCuenta.Id">Borrar</a>
-            </td>
-            <td>
-                @tipoCuenta.Nombre
-            </td>
-        </tr>
-    }
+    <tbody id="reordenable">
+        @foreach (var tipoCuenta in Model)
+        {
+            <tr>
+                <td>
+                    <a class="btn btn-primary" asp-action="Editar" asp-route-id="@tipoCuenta.Id">Editar</a>
+                    <a class="btn btn-danger" asp-action="Borrar" asp-route-id="@tipoCuenta.Id">Borrar</a>
+                </td>
+                <td>
+                    @tipoCuenta.Nombre
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $("#reordenable").sortable();
+        })
+    </script>
+}
