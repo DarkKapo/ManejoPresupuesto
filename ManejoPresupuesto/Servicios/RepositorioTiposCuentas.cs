@@ -27,9 +27,10 @@ namespace ManejoPresupuesto.Servicios
 			using var connection = new SqlConnection( connectionString );
 			//QuerySingle se usa cuando el resultado de la query tiene 1 solo resultado
 			//SCOPE_IDENTITY() retirna el Id del registro creado
-			var id = await connection.QuerySingleAsync<int>(@"INSERT INTO TiposCuentas (Nombre, UsuarioId, Orden)
-													Values(@Nombre, @UsuarioId, 0);
-													SELECT SCOPE_IDENTITY();", tipoCuenta);
+			var id = await connection.QuerySingleAsync<int>("TiposCuentas_Insertar",
+															new {usuarioId = tipoCuenta.UsuarioId,
+																 nombre = tipoCuenta.Nombre},
+															commandType: System.Data.CommandType.StoredProcedure);
 			//Agrega el id extraído a tipoCuenta
 			tipoCuenta.Id = id;
 		}
