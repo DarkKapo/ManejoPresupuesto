@@ -124,5 +124,12 @@ namespace ManejoPresupuesto.Controllers
 
 			return Json( true );
 		}
+
+		//Actualiza el orden de los Tipos Cuentas
+		[HttpPost]
+		public async Task<IActionResult> Ordenar([FromBody] int[] ids)
+		{
+			return Ok();
+		}
 	}
 }
