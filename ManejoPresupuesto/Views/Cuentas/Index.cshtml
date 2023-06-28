@@ -6,6 +6,11 @@
 	{
 		return Math.Abs(balance).ToString("N");
 	}
+	//Retorna la clase dependiendo el valor de balance
+	string ObtenerClaseBalance(decimal balance)
+	{
+		return balance >= 0 ? "activo" : "pasivo";
+	}
 }
 
 <h1>Cuentas</h1>
@@ -40,4 +45,43 @@
 			@FormatearBalance(Model.Sum(x => x.Balance))
 		</div>
 	</div>
+</div>
+
+<div class="accordion acordeon-cuentas">
+	@foreach (var tipoCuenta in Model)
+	{
+		<div class="accordion-item">
+			<h2 class="accordion-header" id="cabeceraUno">
+				@{
+					var id = tipoCuenta.TipoCuenta.Replace(" ", "");
+					//Crea el id dinámico que pide el acordeón para desplegar los items
+					var dataBSTarget = "#" + id;
+					//obtiene activo o pasivo acorde al valor de balance, luego usa esa clase para asignar el color
+					var claseTipoCuenta = ObtenerClaseBalance(tipoCuenta.Balance);
+				}
+
+				<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="@dataBSTarget">
+					<span class="me-3">
+						<span><strong>@tipoCuenta.TipoCuenta</strong></span>
+						<span class="@claseTipoCuenta">@FormatearBalance(tipoCuenta.Balance)</span>
+					</span>
+				</button>
+			</h2>
+			<div id="@id" class="accordion-collapse collapse show">
+				<div>
+					<ul class="list-group">
+						@foreach (var cuenta in tipoCuenta.Cuentas)
+						{
+							//obtiene activo o pasivoe, luego usa esa clase para asignar el color
+							var claseCuenta = ObtenerClaseBalance(cuenta.Balance);
+							<li class="list-group-item">
+								<span><strong>@cuenta.Nombre</strong></span>
+								<span class="@claseCuenta">@FormatearBalance(cuenta.Balance)</span>
+							</li>
+						}
+					</ul>
+				</div>
+			</div>
+		</div>
+	}
 </div>
