@@ -1,6 +1,11 @@
 ﻿@model IEnumerable<IndiceCuentasViewModel>
 @{
 	ViewData["Title"] = "Cuentas";
+
+	string FormatearBalance(decimal balance)
+	{
+		return Math.Abs(balance).ToString("N");
+	}
 }
 
 <h1>Cuentas</h1>
@@ -14,16 +19,16 @@
 		</div>
 		<div class="activo">
 			@*Muestra los balances positivos*@
-			@Model.Where(x => x.Balance > 0).Sum(x => x.Balance)
+			@FormatearBalance(Model.Where(x => x.Balance > 0).Sum(x => x.Balance))
 		</div>
 	</div>
 	<div>
 		<div>
 			<strong>Pasivos</strong>
 		</div>
-		<div>
+		<div class="pasivo">
 			@*Muestra los balances negativos*@
-			@Model.Where(x => x.Balance < 0).Sum(x => x.Balance)
+			@FormatearBalance(Model.Where(x => x.Balance < 0).Sum(x => x.Balance))
 		</div>
 	</div>
 	<div>
@@ -32,7 +37,7 @@
 		</div>
 		<div>
 			@*Suma el total de los balances*@
-			@Model.Sum(x => x.Balance)
+			@FormatearBalance(Model.Sum(x => x.Balance))
 		</div>
 	</div>
 </div>

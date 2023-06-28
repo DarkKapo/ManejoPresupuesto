@@ -4,3 +4,16 @@
 #reordenable tr {
     cursor: move;
 }
+
+.contenedor-totales {
+    display: flex;
+    justify-content: space-around;
+}
+
+.activo {
+    color: blue;
+}
+
+.pasivo {
+    color: red;
+}
