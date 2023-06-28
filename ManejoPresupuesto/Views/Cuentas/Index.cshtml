@@ -6,3 +6,33 @@
 <h1>Cuentas</h1>
 
 <a asp-action="Crear" class="btn btn-primary mb-3">Crear nuevo</a>
+
+<div class="contenedor-totales mb-3">
+	<div>
+		<div>
+			<strong>Activos</strong>
+		</div>
+		<div class="activo">
+			@*Muestra los balances positivos*@
+			@Model.Where(x => x.Balance > 0).Sum(x => x.Balance)
+		</div>
+	</div>
+	<div>
+		<div>
+			<strong>Pasivos</strong>
+		</div>
+		<div>
+			@*Muestra los balances negativos*@
+			@Model.Where(x => x.Balance < 0).Sum(x => x.Balance)
+		</div>
+	</div>
+	<div>
+		<div>
+			<strong>Total</strong>
+		</div>
+		<div>
+			@*Suma el total de los balances*@
+			@Model.Sum(x => x.Balance)
+		</div>
+	</div>
+</div>
